@@ -20,4 +20,7 @@ public Student getStudentById(int id){
 public String removeStudentById(int id){
     return studentDao.removeStudentById(id);
 }
+public String updateStudent(Student student){
+    return studentDao.updateStudent(student);
+}
 }
