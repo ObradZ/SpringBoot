@@ -25,4 +25,10 @@ public class StudentDao {
     public Collection<Student> returnAllStudents(){
 	return this.students.values();
     }
+    public Student getStudentById(int id){
+	if(this.students.get(id)!=null)
+	return this.students.get(id);
+	else
+	    return new Student(0,"NoData","NoData");
+    }
 }
