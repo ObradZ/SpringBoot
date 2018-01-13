@@ -23,4 +23,7 @@ public String removeStudentById(int id){
 public String updateStudent(Student student){
     return studentDao.updateStudent(student);
 }
+public boolean addStudent(Student student){
+    return studentDao.addStudent(student);
+}
 }

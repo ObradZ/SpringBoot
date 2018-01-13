@@ -44,12 +44,22 @@ public class StudentDao {
 	    return "No student with that id!";
 	}
     }
-    
-    public String updateStudent(Student student){
-	
+
+    public String updateStudent(Student student) {
+
 	Student s = this.students.get(student.getId());
 	s.setCourse(student.getCourse());
 	s.setName(student.getName());
 	return "cool";
+    }
+
+    public boolean addStudent(Student student) {
+	if (this.students.containsKey(student.getId())) {
+	    return false;
+	} else {
+	    Student s = new Student(student.getId(),student.getName(),student.getCourse());
+	    this.students.put(s.getId(),s);
+	    return true;
+	}
     }
 }
