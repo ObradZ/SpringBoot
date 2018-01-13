@@ -17,4 +17,7 @@ public Collection<Student> returnAllStudents(){
 public Student getStudentById(int id){
     return studentDao.getStudentById(id);
 }
+public String removeStudentById(int id){
+    return studentDao.removeStudentById(id);
+}
 }
