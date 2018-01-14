@@ -22,8 +22,9 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public boolean addStudent(Student student) {
+	connection = MySqlConnection.getConnection();
 	try {
-	    if ((connection = MySqlConnection.getConnection()) != null) {
+	    if (connection!= null) {
 		PreparedStatement ps = connection.prepareStatement("insert into student(id,name,course) values(null,?,?);  ");
 		ps.setString(1, student.getName());
 		ps.setString(2, student.getCourse());
@@ -46,9 +47,10 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public Student getStudentById(int id) {
+	connection = MySqlConnection.getConnection();
 	try {
 	    Student s = new Student(0, "NoData", "NoData");
-	    if ((connection = MySqlConnection.getConnection()) != null) {
+	    if (connection!= null) {
 		PreparedStatement ps = connection.prepareStatement("select * from student where id=?");
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
@@ -76,8 +78,9 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public String removeStudentById(int id) {
+	connection=MySqlConnection.getConnection();
 	try {
-	    if ((connection = MySqlConnection.getConnection()) != null) {
+	    if (connection!= null) {
 		PreparedStatement ps = connection.prepareStatement("delete from student where id=?");
 		ps.setInt(1, id);
 		ps.execute();
@@ -103,8 +106,9 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public Collection<Student> returnAllStudents() {
+	connection = MySqlConnection.getConnection();
 	try {
-	    if ((connection = MySqlConnection.getConnection()) != null) {
+	    if (connection!= null) {
 
 		List<Student> students = new ArrayList<Student>();
 		Statement st = connection.createStatement();
@@ -119,13 +123,52 @@ public class MySqlStudentDao implements StudentDao {
 	    }
 	} catch (SQLException se) {
 	    return null;
+	}catch(Exception e){
+	    return null;
+	}finally{
+	      try {
+		if (!connection.isClosed()) {
+		    connection.close();
+		}
+	    } catch (SQLException ex) {
+		return null;
+	    }catch(Exception e){
+		return null;
+	    }
 	}
 	    return null;
     }
 
     @Override
     public String updateStudent(Student student) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	connection = MySqlConnection.getConnection();
+	try {
+	    if (connection!= null) {
+		PreparedStatement ps = connection.prepareStatement("update student set name=?,course=? where id=?");
+		ps.setString(1, student.getName());
+		ps.setString(2, student.getCourse());
+		ps.setInt(3, student.getId());
+		ps.execute();
+		return "Updated!";
+
+	    } else {
+		return "Not good!";
+	    }
+	} catch (SQLException se) {
+	    return se.getMessage();
+	} catch (Exception ex) {
+	    return "Exception";
+	} finally {
+	    try {
+		if (!connection.isClosed()) {
+		    connection.close();
+		}
+	    } catch (SQLException ex) {
+		return "SQL2.";
+	    }catch(Exception e){
+		return "ex";
+	    }
+	}
     }
 
 }
