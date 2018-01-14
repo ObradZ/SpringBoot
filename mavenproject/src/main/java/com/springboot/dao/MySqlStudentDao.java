@@ -71,7 +71,27 @@ public class MySqlStudentDao implements StudentDao {
 
     @Override
     public String removeStudentById(int id) {
-	throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	try{
+	if((connection=MySqlConnection.getConnection())!=null){
+	PreparedStatement ps = connection.prepareStatement("delete from student where id=?");
+	ps.setInt(1, id);
+	ps.execute();
+	return "All went nice!:)";	
+	
+	}else
+	    return "not good. else";
+	}catch(SQLException se){
+	    return "SQLException";
+	}catch(Exception ex){
+	    return "Exception";
+	}finally{
+	    try {
+		if(!connection.isClosed())
+		    connection.close();
+	    } catch (SQLException ex) {
+		Logger.getLogger(MySqlStudentDao.class.getName()).log(Level.SEVERE, null, ex);
+	    }
+	}
     }
 
     @Override
