@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 @Repository
+@Qualifier("fakeData")
 public class FakeDataStudentDao implements StudentDao {
 
     private static Map<Integer, Student> students;
